@@ -5,17 +5,16 @@
   justify-content: center;
   align-items: center;
   
-  /* Fondo con degradado y textura sutil */
-  background: 
+  /* Fondo con doble degradado para simular textura */
+  background:
     radial-gradient(circle at center, rgba(34, 108, 59, 0.9), rgba(13, 13, 13, 0.95)),
-    url('/assets/textures/neon-grid.png') center/cover no-repeat;
+    repeating-radial-gradient(circle, transparent 0, transparent 20px, rgba(0,0,0,0.1) 21px, rgba(0,0,0,0.1) 40px);
   
   /* Tipografía futurista */
   font-family: 'Orbitron', sans-serif;
   color: var(--text-color);
   text-shadow: 0 0 8px var(--primary-color);
   
-  /* Efecto de brillo animado */
   position: relative;
   overflow: hidden;
 }
@@ -38,13 +37,11 @@
     transparent 270deg 315deg,
     rgba(255, 0, 255, 0.1) 315deg 360deg
   );
-  animation: spin 10s linear infinite;
+  animation: spin 12s linear infinite;
 }
 
 @keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+  to { transform: rotate(360deg); }
 }
 
 .Homepage .container {
