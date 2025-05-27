@@ -1,0 +1,71 @@
+/* =========================
+   game.css - Tablero, modal y fondo de juego
+   ========================= */
+
+:root {
+  --game-button-border: #454545;
+  --game-button-disabled-border: #FF0000;
+  --game-board-color: #226c3b;
+  --bg-color: #800020;
+}
+
+.game-bg {
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, #2b001f, #08000a);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-main);
+  color: var(--text-color);
+  overflow: auto;
+}
+
+.game-board {
+  background: var(--game-board-color);
+  padding: 2rem;
+  border: 0.5rem solid var(--game-button-border);
+  border-radius: 1rem;
+  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  max-width: 1200px;
+}
+
+.game-board button {
+  background: transparent;
+  border: 2px solid var(--primary-color);
+  color: var(--primary-color);
+  padding: 0.6rem 1.2rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: all var(--transition);
+  margin: 0.5rem;
+}
+.game-board button:disabled {
+  border-color: var(--game-button-disabled-border);
+  color: #888;
+  cursor: not-allowed;
+}
+.game-board button:hover:not(:disabled) {
+  background: var(--accent-color);
+  color: var(--bg-color);
+  box-shadow: 0 0 15px var(--accent-color);
+}
+
+@media (max-width: 600px) {
+  .game-bg,
+  .game-board {
+    font-size: 0.9rem;
+  }
+  .game-board {
+    width: 90%;
+    padding: 1rem;
+  }
+  .game-board button {
+    width: 7.5rem;
+    padding: 0.5rem 1rem;
+  }
+}
