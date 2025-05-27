@@ -1,9 +1,58 @@
 .Homepage {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--game-board-color);
-    font-family: 'Ubuntu Mono', monospace;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  /* Fondo con degradado y textura sutil */
+  background: 
+    radial-gradient(circle at center, rgba(34, 108, 59, 0.9), rgba(13, 13, 13, 0.95)),
+    url('/assets/textures/neon-grid.png') center/cover no-repeat;
+  
+  /* Tipografía futurista */
+  font-family: 'Orbitron', sans-serif;
+  color: var(--text-color);
+  text-shadow: 0 0 8px var(--primary-color);
+  
+  /* Efecto de brillo animado */
+  position: relative;
+  overflow: hidden;
+}
+
+.Homepage::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(
+    from 45deg,
+    transparent 0deg 45deg,
+    rgba(0, 255, 255, 0.1) 45deg 90deg,
+    transparent 90deg 135deg,
+    rgba(255, 0, 255, 0.1) 135deg 180deg,
+    transparent 180deg 225deg,
+    rgba(0, 255, 255, 0.1) 225deg 270deg,
+    transparent 270deg 315deg,
+    rgba(255, 0, 255, 0.1) 315deg 360deg
+  );
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.Homepage .container {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  background: rgba(18, 18, 18, 0.6);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 15px var(--primary-color);
 }
