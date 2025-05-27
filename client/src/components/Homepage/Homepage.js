@@ -87,7 +87,7 @@ const Homepage = () => {
             >
             {!user && (
                 <Heading m="1rem 0" color="whitesmoke" size="lg">
-                Sign In/Register to unlock Premium features
+                Trabajo fin de grado - DAW
                 </Heading>
             )}
             {user && (
