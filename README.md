@@ -1,20 +1,23 @@
+# Juego de Póquer Multijugador
+- Un juego de póquer multijugador que utiliza WebSockets
 
-# Multiplayer Poker Game
+- Implementado con la pila MERN (MongoDB, Express, React, NodeJS)
 
-A Multiplayer Poker Game that uses WebSockets
-- Implemented using the **MERN** (MongoDB, Express, React, NodeJS) stack
-- Socket.io is used to provide WebSocket support
-- Users can play with each other using **Room Codes** or choose to queue up for automatic **Matchmaking**
-- Although the game does not need a database, we have implemented **user authentication** using a **REST API** that requires us to store data.
-- Uses JWT authentication patterns, implemented **Refresh Tokens** and **Access Tokens** to protect against XSS attacks. Tokens are stored in Secure, HttpOnly Cookies as opposed to LocalStorage for further protection
-- Passwords are **hashed** using the library bcrypt before saving
-- A confirmation email is sent to users before activating their account
+- Se utiliza Socket.io para proporcionar soporte de WebSocket
 
-## Live Demo
-**You may try the game out by yourself by opening it on two different tabs & clicking the *Matchmaking* button**  
-- [https://raghu-poker-game.netlify.app/](https://raghu-poker-game.netlify.app/)
+- Los usuarios pueden jugar entre sí usando códigos de sala o elegir hacer cola para emparejamiento automático
 
-## Author
+- Aunque el juego no necesita una base de datos, hemos implementado autenticación de usuarios mediante una API REST que requiere almacenar datos
 
-- [Raghunath Prabhakar](https://www.github.com/Raghuboi)
+- Usa patrones de autenticación con JWT; se implementaron Refresh Tokens y Access Tokens para proteger contra ataques XSS. Los tokens se almacenan en    cookies seguras y HttpOnly en lugar de LocalStorage para mayor protección
 
+- Las contraseñas se hashean con la librería bcrypt antes de guardarse
+
+- Se envía un correo de confirmación a los usuarios antes de activar su cuenta
+
+## Demo en Vivo
+Puedes probar el juego tú mismo abriéndolo en dos pestañas diferentes y haciendo clic en el botón Matchmaking: 
+https://agustin-alvarez-fijo-poker-royale-tfg.netlify.app/
+
+## Autor
+Agustín Álvarez Fijo
