@@ -73,25 +73,54 @@ const Homepage = () => {
 
     return (
         <div className="Homepage">
-            <Flex className="noselect" justify="center" align="center" flexDir="column" flexWrap="wrap">
-            {!user && <Heading m="1rem 0" color="whitesmoke" size="lg">Sign In/Register to unlock Premium features</Heading>}
-            {user && <Heading m="1rem 0" color="whitesmoke" size="lg">Welcome, {user.username}!</Heading>}
+            {/* Título principal */}
+            <header className="homepage-header">
+            <h1>🎲 Poker Royale 🎲</h1>
+            </header>
+
+            <Flex
+            className="noselect"
+            justify="center"
+            align="center"
+            flexDir="column"
+            flexWrap="wrap"
+            >
+            {!user && (
+                <Heading m="1rem 0" color="whitesmoke" size="lg">
+                Sign In/Register to unlock Premium features
+                </Heading>
+            )}
+            {user && (
+                <Heading m="1rem 0" color="whitesmoke" size="lg">
+                Welcome, {user.username}!
+                </Heading>
+            )}
             <VStack w="lg" s="1rem" align="center" justify="center">
-                <Spacer/>                
-                <SignIn w="30%" size="lg"/>
-                {!(user) && <SignUp w="30%" size="lg"/>}
+                <Spacer />
+                <SignIn w="30%" size="lg" />
+                {!user && <SignUp w="30%" size="lg" />}
                 <GameCodeModal w="30%" size="lg" />
-                <WaitingButton 
-                    w="30%"
-                    size="lg"
-                    onClose={() => {setWaitingToggle(false)}} 
-                    onTrigger={() => {setWaitingToggle(true)}} 
-                    queueLength={waiting.length} 
+                <WaitingButton
+                w="30%"
+                size="lg"
+                onClose={() => {
+                    setWaitingToggle(false);
+                }}
+                onTrigger={() => {
+                    setWaitingToggle(true);
+                }}
+                queueLength={waiting.length}
                 />
             </VStack>
             </Flex>
-        </div> 
-    )
+
+            {/* Footer */}
+            <footer className="homepage-footer">
+            <small>by Agustín Alvarez Fijo</small>
+            </footer>
+        </div>
+        );
+
 }
 
 export default Homepage
