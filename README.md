@@ -1,12 +1,12 @@
 # Poker Royal
 
-**Juego de Póker 1vs1 en Tiempo Real**
+**Juego de Poker 1vs1 en Tiempo Real**
 
 ---
 
 ## Descripción
 
-Poker Royal es una plataforma full-stack para partidas de póker uno contra uno, desarrollada con tecnologías JavaScript: React en el frontend y Node.js con Express en el backend. La comunicación en tiempo real se gestiona mediante Socket.io, y los usuarios se autentican con JWT para garantizar seguridad. Los datos se almacenan en MongoDB Atlas.
+Poker Royal es una plataforma full-stack para partidas de poker uno contra uno, desarrollada con tecnologías JavaScript: React en el frontend y Node.js con Express en el backend. La comunicación en tiempo real se gestiona mediante Socket.io, y los usuarios se autentican con JWT para garantizar seguridad. Los datos se almacenan en MongoDB Atlas.
 
 ---
 
@@ -28,7 +28,7 @@ Poker Royal es una plataforma full-stack para partidas de póker uno contra uno,
 poker-royal/
 ├── client/             # Aplicación React (frontend)
 ├── server/             # API REST y Socket.io (backend)
-├── docs/               # Documentación adicional y diagramas UML
+├── docs/               # Diagramas UML
 └── README.md           # Este archivo
 ```
 
@@ -69,7 +69,7 @@ npm install
 cp .env.example .env
 # Edita .env con tus valores:
 # PORT, MONGO_URI, JWT_SECRET, EMAIL_USER, EMAIL_PASS, CLIENT_URL
-npm run dev        # o yarn dev
+npm run dev        
 ```
 
 El servidor se ejecutará en [http://localhost:4000](http://localhost:4000) con hot-reload.
@@ -78,7 +78,7 @@ El servidor se ejecutará en [http://localhost:4000](http://localhost:4000) con 
 
 ```bash
 cd ../client
-npm install      
+npm install       
 cp .env.example .env
 # Edita .env con tus valores:
 # REACT_APP_API_URL=http://localhost:4000/api
@@ -100,6 +100,33 @@ El cliente estará disponible en [http://localhost:3000](http://localhost:3000).
 
 ---
 
+## Visualización de Diagramas (/docs)
+
+Dentro de la carpeta `docs/` encontrarás los archivos PlantUML con los diagramas UML y de flujo utilizados en la documentación. Para generar y visualizar estos diagramas tienes varias opciones:
+
+1. **Extensión PlantUML en VS Code (recomendado)**
+
+   * Instala la extensión **"PlantUML"** de jebbs.
+   * Abre el archivo `.puml` dentro de `docs/`.
+   * Pulsa `Alt + D` para activar la vista previa del diagrama en tiempo real.
+
+2. **Servidor Online de PlantUML**
+
+   * Accede a [https://www.planttext.com/](https://www.planttext.com/) o [https://www.plantuml.com/plantuml/uml/](https://www.plantuml.com/plantuml/uml/).
+   * Copia y pega el contenido del archivo `.puml` y obtén la imagen generada inmediatamente.
+
+3. **CLI de PlantUML (requiere Java)**
+
+   * Descarga `plantuml.jar` desde la web oficial.
+   * Ejecuta:
+
+     ```bash
+     java -jar plantuml.jar docs/mi_diagrama.puml
+     ```
+   * Generará un archivo PNG junto al `.puml` original.
+
+---
+
 ## Despliegue
 
 * **Frontend:** Genera la build y sube a Netlify:
@@ -112,7 +139,7 @@ El cliente estará disponible en [http://localhost:3000](http://localhost:3000).
 
   ```bash
   cd server
-  npm run build    # si usas TypeScript
+  npm run build    
   npm start
   ```
 
@@ -120,15 +147,6 @@ Asegúrate de configurar variables de entorno en tu plataforma de despliegue.
 
 ---
 
-## Contribuir
-
-1. Haz un fork del repositorio.
-2. Crea una rama (`git checkout -b feature/mi-cambio`).
-3. Implementa tu cambio y añade tests.
-4. Envía un Pull Request describiendo tus modificaciones.
-
----
-
 ## Licencia
 
-© Agustín Álvarez Fijo - 2025
+MIT © 2025 Agustín Álvarez Fijo

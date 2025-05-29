@@ -1,142 +1,133 @@
-/**Sockets de “sala de espera”:
- * ----------------------------
+/**
+ * Página de inicio con lógica de “sala de espera” mediante sockets
+ *
+ * - Conecta al servidor Socket.io en ENDPOINT.
+ * - Gestiona el estado `waiting` con los socket IDs en cola.
+ * - Emite `waiting` y `waitingDisconnection` al pulsar el botón de espera.
+ * - Escucha `waitingRoomData` para actualizar la cola en tiempo real.
+ * - Cuando `waiting.length >= 2`, solicita un `randomCode` al servidor,
+ *   que asigna un código de sala a los dos primeros sockets.
+ * - Al recibir `randomCode`, redirige al usuario correspondiente a `/play?roomCode=XXX`.
+ * - No realiza llamadas REST ni interacciona con la base de datos; toda la
+ *   coordinación es transitoria y en memoria vía sockets.
+ */
 
-Lanza waiting cuando el usuario hace clic en WaitingButton (para apuntarse a la cola), y waitingDisconnection para salirse.
-
-Escucha waitingRoomData (que el servidor le envía cada vez que cambia la cola) y actualiza el estado local waiting.
-
-Cuando la longitud de la cola llega a 2, lanza randomCode —pidiendo al servidor que asigne un código de sala a esos dos sockets.
-
-Escucha luego randomCode desde el servidor, y al recibirlo redirige a /play?roomCode=XXX.
-
-No toca la base de datos
-Esta pantalla solo usa sockets en memoria para coordinar quién espera y cuándo hay dos jugadores.
-No hace llamadas REST, ni lee/escribe nada en la base de datos, todo es transitorio. */
-
-import React, { useState, useEffect, useContext } from 'react'
-import { Redirect } from 'react-router-dom'
-import randomCodeGenerator from '../../utils/randomCodeGenerator'
-import './Homepage.css'
-import io from 'socket.io-client'
-import { UserContext } from '../../utils/UserContext'
-import SignIn from '../../components/auth/SignIn'
+import React, { useState, useEffect, useContext } from 'react';
+import { Redirect } from 'react-router-dom';
+import randomCodeGenerator from '../../utils/randomCodeGenerator';
+import './Homepage.css';
+import io from 'socket.io-client';
+import { UserContext } from '../../utils/UserContext';
+import SignIn from '../../components/auth/SignIn';
 import {
-    Heading,
-    VStack,
-    Spacer,
-    Flex
-} from '@chakra-ui/react'
-import WaitingButton from './WaitingButton'
-import GameCodeModal from './GameCodeModal'
-import SignUp from '../auth/SignUp'
+  Heading,
+  VStack,
+  Spacer,
+  Flex
+} from '@chakra-ui/react';
+import WaitingButton from './WaitingButton';
+import GameCodeModal from './GameCodeModal';
 
-let socket
-const ENDPOINT = process.env.REACT_APP_ENDPOINT
+let socket;
+const ENDPOINT = process.env.REACT_APP_ENDPOINT;
 
 const Homepage = () => {
-    const [waiting, setWaiting] = useState([])
-    const [waitingToggle, setWaitingToggle] = useState(false)
-    const [code, setCode] = useState('')
-    const { user } = useContext(UserContext)
+  const [waiting, setWaiting] = useState([]);
+  const [waitingToggle, setWaitingToggle] = useState(false);
+  const [code, setCode] = useState('');
+  const { user } = useContext(UserContext);
 
-    useEffect(() => {
-        const connectionOptions =  {
-            "forceNew" : true,
-            "reconnectionAttempts": "Infinity",                   
-            "transports" : ["websocket"]
-        }
-        socket = io.connect(ENDPOINT, connectionOptions)
+  // Conexión y limpieza de socket
+  useEffect(() => {
+    const options = {
+      forceNew: true,
+      reconnectionAttempts: Infinity,
+      transports: ['websocket']
+    };
+    socket = io.connect(ENDPOINT, options);
 
-        //Limpio el componente 
-        return function cleanup() {
-            socket.emit('waitingDisconnection')
-            //Apago la conexión
-            socket.off()
-        }
-    }, [])
+    return () => {
+      socket.emit('waitingDisconnection');
+      socket.off();
+    };
+  }, []);
 
-   
-    useEffect(() => {
-        socket.on('waitingRoomData', ({ waiting }) => {
-            waiting && setWaiting(waiting)
-        })
-        socket.on('randomCode', ({ code }) =>{
-            code && setCode(code)
-        })
-    }, [])
+  // Suscripción a eventos de socket
+  useEffect(() => {
+    socket.on('waitingRoomData', ({ waiting }) => {
+      waiting && setWaiting(waiting);
+    });
+    socket.on('randomCode', ({ code }) => {
+      code && setCode(code);
+    });
+  }, []);
 
-    useEffect(() => {
-        !waitingToggle && socket.emit('waitingDisconnection')
-        waitingToggle && socket.emit('waiting')
-    }, [waitingToggle])
+  // Emitir eventos de unión o salida de la cola
+  useEffect(() => {
+    waitingToggle
+      ? socket.emit('waiting')
+      : socket.emit('waitingDisconnection');
+  }, [waitingToggle]);
 
-    if (waiting.length>=2) {
-        const users = waiting.slice(0,2)
-        socket.emit('randomCode', {
-            id1: users[0],
-            id2: users[1],
-            code: randomCodeGenerator(3)
-        })
-        if (users[0] === socket.id && code!=='') {
-            socket && socket.emit('waitingDisconnection', (users[0]))
-            return <Redirect to={`/play?roomCode=${code}`}/>
-        }
-        else if (users[1] === socket.id && code!=='') {
-            socket && socket.emit('waitingDisconnection', (users[0]))
-            return <Redirect to={`/play?roomCode=${code}`}/>
-        }
+  // Emparejamiento cuando hay ≥2 usuarios en espera
+  if (waiting.length >= 2) {
+    const users = waiting.slice(0, 2);
+    socket.emit('randomCode', {
+      id1: users[0],
+      id2: users[1],
+      code: randomCodeGenerator(3)
+    });
+
+    // Si soy uno de los dos primeros y ya tengo código, redirijo
+    if ((users[0] === socket.id || users[1] === socket.id) && code) {
+      socket.emit('waitingDisconnection');
+      return <Redirect to={`/play?roomCode=${code}`} />;
     }
+  }
 
-    return (
-        <div className="Homepage">
-            {/* Título principal */}
-            <header className="homepage-header">
-            <h1>🎲 Poker Royale 🎲</h1>
-            </header>
+  return (
+    <div className="Homepage">
+      {/* Cabecera */}
+      <header className="homepage-header">
+        <h1>🎲 Poker Royale 🎲</h1>
+      </header>
 
-            <Flex
-            className="noselect"
-            justify="center"
-            align="center"
-            flexDir="column"
-            flexWrap="wrap"
-            >
-            {!user && (
-                <Heading m="1rem 0" color="whitesmoke" size="lg">
-                TFG - DAW
-                </Heading>
-            )}
-            {user && (
-                <Heading m="1rem 0" color="whitesmoke" size="lg">
-                Welcome, {user.username}!
-                </Heading>
-            )}
-            <VStack w="lg" s="1rem" align="center" justify="center">
-                <Spacer />
-                <SignIn w="30%" size="lg" />
-                {!user && <SignUp w="30%" size="lg" />}
-                <GameCodeModal w="30%" size="lg" />
-                <WaitingButton
-                w="30%"
-                size="lg"
-                onClose={() => {
-                    setWaitingToggle(false);
-                }}
-                onTrigger={() => {
-                    setWaitingToggle(true);
-                }}
-                queueLength={waiting.length}
-                />
-            </VStack>
-            </Flex>
+      <Flex
+        className="noselect"
+        justify="center"
+        align="center"
+        flexDir="column"
+      >
+        {!user ? (
+          <Heading m="1rem 0" color="whitesmoke" size="lg">
+            TFG - DAW
+          </Heading>
+        ) : (
+          <Heading m="1rem 0" color="whitesmoke" size="lg">
+            Welcome, {user.username}!
+          </Heading>
+        )}
+        <VStack w="lg" s="1rem" align="center" justify="center">
+          <Spacer />
+          <SignIn w="30%" size="lg" />
+          {!user && <SignUp w="30%" size="lg" />}
+          <GameCodeModal w="30%" size="lg" />
+          <WaitingButton
+            w="30%"
+            size="lg"
+            onTrigger={() => setWaitingToggle(true)}
+            onClose={() => setWaitingToggle(false)}
+            queueLength={waiting.length}
+          />
+        </VStack>
+      </Flex>
 
-            {/* Footer */}
-            <footer className="homepage-footer">
-            <small>by Agustín Alvarez Fijo</small>
-            </footer>
-        </div>
-        );
+      {/* Pie de página */}
+      <footer className="homepage-footer">
+        <small>by Agustín Alvarez Fijo</small>
+      </footer>
+    </div>
+  );
+};
 
-}
-
-export default Homepage
+export default Homepage;

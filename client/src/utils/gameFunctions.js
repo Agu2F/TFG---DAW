@@ -205,7 +205,7 @@ export function getWinner(p1, p2, hand1, hand2) {
 
                     else if (hand1.secondary === hand2.secondary) {
 
-                        if (hand1.tertiary) { // checks if tertiary criteria exists
+                        if (hand1.tertiary) { // Comprueba si tertiary existe
 
                             if (hand1.tertiary > hand2.tertiary) return p1
                             else if (hand1.tertiary < hand2.tertiary) return p2

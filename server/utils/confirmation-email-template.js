@@ -1,4 +1,16 @@
-
+/**
+ * Genera el HTML de la plantilla de correo para confirmación de email.
+ *
+ * Esta función devuelve un string con el contenido completo de un documento HTML,
+ * listo para ser enviado como cuerpo de un email. Incluye:
+ * - Definiciones de estilos inlined para máxima compatibilidad con clientes de correo.
+ * - Fuentes web de Google (Source Sans Pro) para soporte en distintos dispositivos.
+ * - Secciones de preheader, cabecera, cuerpo con botón de confirmación y pie de página.
+ * - Enlace al servidor (`url`) insertado tanto en el botón como en el texto en caso de fallo.
+ *
+ * @param {string} url - URL única de confirmación que el usuario deberá pulsar.
+ * @returns {string} HTML completo de la plantilla de email.
+ */
 const getTemplateHTML = (url) => {
     return `<!DOCTYPE html>
     <html>

@@ -1,3 +1,18 @@
+/**
+ * Envia correos de confirmación de email a nuevos usuarios.
+ *
+ * Este módulo configura un transportador con Nodemailer utilizando credenciales
+ * de Gmail, genera el contenido HTML del email a partir de una plantilla
+ * (confirmation-email-template) y envía el mensaje al usuario.
+ *
+ * - email: dirección de correo del destinatario.
+ * - uniqueString: token único para verificar la cuenta, integrado en la URL.
+ *
+ * Se emplea:
+ * - process.env.EMAIL_ID / EMAIL_PASSWORD para la autenticación SMTP.
+ * - process.env.FRONTEND_ENDPOINT como base de la URL de verificación.
+ * - getTemplateHTML para generar el cuerpo HTML del correo.
+ */
 const nodemailer = require('nodemailer')
 const getTemplateHTML = require('./confirmation-email-template')
 
