@@ -1,3 +1,17 @@
+/**
+ * Componente Verify:
+ * ------------------
+ * Este componente verifica la cuenta de usuario a través de un parámetro de consulta `id`:
+ *  - Extrae `id` de la query string (props.location.search) con `query-string`.
+ *  - En el `useEffect`, envía una petición GET a `/auth/verify/{id}`:
+ *      • Si la respuesta es 200, marca `verified = true`.
+ *      • Siempre deja `loading = false` tras la petición.
+ *  - Renderizado condicional:
+ *      • Mientras `loading` es true: muestra “Loading...”.
+ *      • Si `verified` es true: muestra mensaje de éxito y enlace a la página principal.
+ *      • Si `verified` es false: muestra mensaje de error y sugiere registrarse de nuevo.
+ */
+
 import React, { useEffect, useState } from 'react'
 import queryString from 'query-string'
 import { Link } from 'react-router-dom'

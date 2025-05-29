@@ -1,27 +1,26 @@
 /* ===================================
-   App.css - Estilos globales y layout
+   App.css – Estilos globales y layout
    =================================== */
 
+/* Colores “Casino Pro”: negro, verde, rojo, blanco */
 :root {
-  /* Variables globales */
-  --bg-color: #0d0d0d;
-  --text-color: #e0e0e0;
-  --primary-color: #00ffff;
-  --accent-color: #ff00ff;
-  --board-color: #121212;
-  --modal-bg: rgba(18, 18, 18, 0.85);
-  --font-main: 'Orbitron', sans-serif;
-  --transition: 0.3s ease-in-out;
-  --border-radius: 12px;
+  --bg-color:        #000000;        /* fondo principal */
+  --text-color:      #ffffff;        /* texto */
+  --primary-color:   #00c48c;        /* verde CTA */
+  --accent-color:    #e60000;        /* rojo énfasis */
+  --board-color:     #3c573d  ;        /* fondo de secciones */
+  --modal-bg:        rgba(0, 0, 0, 0.8);
+  --font-main:       'Orbitron', sans-serif;
+  --transition:      0.3s ease-in-out;
+  --border-radius:   12px;
 }
 
 .App {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0; left: 0;
   width: 100vw;
   height: 100vh;
-  background: linear-gradient(135deg, #081217, #1a1f29);
+  background: linear-gradient(135deg, #080808, #1a1a1a);
   overflow: hidden;
   font-family: var(--font-main);
   color: var(--text-color);
@@ -32,10 +31,11 @@
   user-select: none;
 }
 
+/* Enlaces */
 a {
   text-decoration: none;
   color: var(--primary-color);
-  transition: color var(--transition);
+  transition: color var(--transition), text-shadow var(--transition);
 }
 a:hover {
   color: var(--accent-color);
@@ -50,6 +50,9 @@ a:hover {
   justify-content: center;
   height: 100%;
   padding: 2rem;
+  background: var(--board-color);
+  box-shadow: inset 0 0 50px #000;
+  border-radius: var(--border-radius);
 }
 
 /* Botón base */
@@ -63,9 +66,90 @@ a:hover {
   cursor: pointer;
   backdrop-filter: blur(6px);
   transition: all var(--transition);
+  font-weight: bold;
 }
 .button:hover {
   background: var(--primary-color);
   color: var(--bg-color);
-  box-shadow: 0 0 15px var(--primary-color), 0 0 30px var(--accent-color);
+  box-shadow:
+    0 0 15px var(--primary-color),
+    0 0 30px var(--accent-color);
 }
+
+/* Tableros y paneles */
+.board {
+  background: var(--board-color);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.7),
+    0 0 15px var(--primary-color);
+}
+
+/* Modal genérico */
+.modal {
+  background: var(--modal-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  box-shadow:
+    0 0 25px rgba(0, 0, 0, 0.8),
+    0 0 20px var(--accent-color);
+  transition: opacity var(--transition);
+}
+
+/* Inputs y selects */
+input, select, textarea {
+  width: 100%;
+  padding: 0.6rem 1rem;
+  margin: 0.5rem 0;
+  background: #222;
+  border: 1px solid var(--primary-color);
+  border-radius: var(--border-radius);
+  color: var(--text-color);
+  font-family: var(--font-main);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 8px var(--accent-color);
+}
+
+/* Títulos y encabezados */
+h1, h2, h3, h4 {
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1rem;
+}
+h1 {
+  color: var(--accent-color);
+  font-size: 2.5rem;
+  text-shadow: 0 0 8px var(--accent-color);
+}
+h2 {
+  color: var(--primary-color);
+  font-size: 2rem;
+  text-shadow: 0 0 6px var(--primary-color);
+}
+
+/* Transiciones y animaciones */
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes glow {
+  0%,100% { text-shadow: 0 0 4px var(--primary-color); }
+  50%     { text-shadow: 0 0 8px var(--accent-color); }
+}
+
+/* Aplicar animaciones */
+.fade-in {
+  animation: fadeInDown var(--transition) both;
+}
+.glow-text {
+  animation: glow 2s ease-in-out infinite;
+}
+

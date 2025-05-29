@@ -1,3 +1,18 @@
+/**Sockets de “sala de espera”:
+ * ----------------------------
+
+Lanza waiting cuando el usuario hace clic en WaitingButton (para apuntarse a la cola), y waitingDisconnection para salirse.
+
+Escucha waitingRoomData (que el servidor le envía cada vez que cambia la cola) y actualiza el estado local waiting.
+
+Cuando la longitud de la cola llega a 2, lanza randomCode —pidiendo al servidor que asigne un código de sala a esos dos sockets.
+
+Escucha luego randomCode desde el servidor, y al recibirlo redirige a /play?roomCode=XXX.
+
+No toca la base de datos
+Esta pantalla solo usa sockets en memoria para coordinar quién espera y cuándo hay dos jugadores.
+No hace llamadas REST, ni lee/escribe nada en la base de datos, todo es transitorio. */
+
 import React, { useState, useEffect, useContext } from 'react'
 import { Redirect } from 'react-router-dom'
 import randomCodeGenerator from '../../utils/randomCodeGenerator'
@@ -32,14 +47,15 @@ const Homepage = () => {
         }
         socket = io.connect(ENDPOINT, connectionOptions)
 
-        //cleanup on component unmount
+        //Limpio el componente 
         return function cleanup() {
             socket.emit('waitingDisconnection')
-            //shut down connnection instance
+            //Apago la conexión
             socket.off()
         }
     }, [])
 
+   
     useEffect(() => {
         socket.on('waitingRoomData', ({ waiting }) => {
             waiting && setWaiting(waiting)
@@ -87,7 +103,7 @@ const Homepage = () => {
             >
             {!user && (
                 <Heading m="1rem 0" color="whitesmoke" size="lg">
-                Trabajo fin de grado - DAW
+                TFG - DAW
                 </Heading>
             )}
             {user && (

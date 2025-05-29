@@ -1,129 +1,142 @@
-.Homepage {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  
-  /* Fondo con doble degradado para simular textura */
-  background:
-    radial-gradient(circle at center, rgba(108, 34, 34, 0.9), rgba(13, 13, 13, 0.95)),
-    repeating-radial-gradient(circle, transparent 0, transparent 20px, rgba(0,0,0,0.1) 21px, rgba(0,0,0,0.1) 40px);
-  
-  /* Tipografía futurista */
+/* Homepage.css – Estilo profesional “Casino Pro” */
+
+/* RESET BÁSICO */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background: #000;
+  color: #fff;
   font-family: 'Orbitron', sans-serif;
-  color: var(--text-color);
-  text-shadow: 0 0 8px var(--primary-color);
-  
+}
+
+/* CONTENEDOR PRINCIPAL */
+.Homepage {
   position: relative;
+  min-height: 100vh;
+  background: url('/src/assets/images/poker-table.JPEG') center/cover fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   overflow: hidden;
 }
 
+/* OVERLAY OSCURO PARA MEJORAR CONTRASTE */
 .Homepage::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(
-    from 45deg,
-    transparent 0deg 45deg,
-    rgba(0, 255, 255, 0.1) 45deg 90deg,
-    transparent 90deg 135deg,
-    rgba(255, 0, 255, 0.1) 135deg 180deg,
-    transparent 180deg 225deg,
-    rgba(0, 255, 255, 0.1) 225deg 270deg,
-    transparent 270deg 315deg,
-    rgba(255, 0, 255, 0.1) 315deg 360deg
-  );
-  animation: spin 12s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-.Homepage .container {
-  position: relative;
-  z-index: 1;
-  padding: 2rem;
-  background: rgba(18, 18, 18, 0.6);
-  border: 1px solid var(--accent-color);
-  border-radius: var(--border-radius);
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.7), 0 0 15px var(--primary-color);
-}
-
-
-.homepage-header {
-  position: absolute;
-  top: 1rem;
-  width: 100%;
-  text-align: center;
-  z-index: 2;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
   pointer-events: none;
 }
 
-.homepage-header h1 {
-  margin: 0;
-  font-size: 3rem;
-  color: var(--primary-color);
-  font-family: 'Orbitron', sans-serif;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+/* HEADER */
+.homepage-header {
   position: relative;
-  animation: neon-flicker 2s infinite;
-}
-
-.homepage-header h1::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: -0.2em;
-  transform: translateX(-50%);
-  width: 60%;
-  height: 4px;
-  background: var(--accent-color);
-  box-shadow: 0 0 8px var(--accent-color), 0 0 16px var(--primary-color);
-  border-radius: 2px;
-}
-
-@keyframes neon-flicker {
-  0%, 100% { text-shadow:
-      0 0 4px var(--primary-color),
-      0 0 8px var(--primary-color),
-      0 0 12px var(--accent-color),
-      0 0 16px var(--accent-color); }
-  50% { text-shadow:
-      0 0 2px var(--primary-color),
-      0 0 4px var(--primary-color),
-      0 0 6px var(--accent-color),
-      0 0 8px var(--accent-color); }
-}
-
-.homepage-footer {
-  position: absolute;
-  bottom: 1rem;
-  width: 100%;
+  padding: 1.5rem 2rem;
   text-align: center;
-  z-index: 2;
+  z-index: 1;
+  border-bottom: 2px solid #e60000; /* rojo */
+  backdrop-filter: blur(6px);
+}
+.homepage-header h1 {
+  font-size: 2.5rem;
+  color: #e60000; /* rojo */
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  animation: fadeInDown 0.8s ease-out both;
 }
 
+/* CUERPO CENTRAL */
+.noselect {
+  position: relative;
+  z-index: 1;
+  padding: 4rem 1rem;
+  display: flex !important; /* override Chakra container */
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.noselect > h2 {
+  margin-bottom: 1rem;
+  color: #00c48c; /* verde */
+  font-size: 1.5rem;
+  letter-spacing: 0.1em;
+}
+.noselect .chakra-heading {
+  margin-bottom: 2rem;
+}
+.noselect .chakra-input,
+.noselect input,
+.noselect .chakra-input__group {
+  border-color: #00c48c !important;
+}
+.noselect button {
+  background: #00c48c !important;  /* verde */
+  color: #000 !important;           /* negro */
+  border-radius: 2rem !important;
+  padding: 0.75rem 2rem !important;
+  font-weight: bold !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+.noselect button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* MODAL Y WAITING BUTTON */
+.GameCodeModal,
+.WaitingButton {
+  margin: 1rem 0;
+  animation: fadeIn 1s ease-out both;
+}
+
+/* FOOTER */
+.homepage-footer {
+  position: relative;
+  z-index: 1;
+  padding: 1rem 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  border-top: 1px solid #e60000;
+}
 .homepage-footer small {
-  color: var(--text-color);
-  font-family: 'Orbitron', sans-serif;
+  color: #ccc;
   font-size: 0.8rem;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.6;
-  animation: glow-pulse 3s ease-in-out infinite;
+  animation: glowFooter 3s ease-in-out infinite;
 }
 
-@keyframes glow-pulse {
-  0%, 100% { text-shadow:
-      0 0 2px var(--accent-color),
-      0 0 4px var(--accent-color); }
-  50% { text-shadow:
-      0 0 4px var(--primary-color),
-      0 0 8px var(--primary-color); }
+/* ANIMACIONES */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  } to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  } to {
+    opacity: 1;
+  }
+}
+@keyframes glowFooter {
+  0%, 100% {
+    text-shadow: 0 0 2px #e60000, 0 0 4px #e60000;
+  }
+  50% {
+    text-shadow: 0 0 4px #00c48c, 0 0 8px #00c48c;
+  }
+}
+
+/* UTILIDADES */
+.hidden {
+  display: none !important;
 }

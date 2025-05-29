@@ -1,3 +1,29 @@
+/**
+ * Componente RaiseModal:
+ * ----------------------
+ * Este componente renderiza un botón "Raise" que abre un modal usando Chakra UI.
+ * Dentro del modal se muestra un formulario construido con Formik y validado con Yup:
+ *  - initialValues.raise: valor inicial redondeado a la décima más cercana basado en props.minRaise.
+ *  - validationSchema: 
+ *      • Debe ser un número y estar presente.
+ *      • Máximo menor que props.maxRaise (muestra chips restantes).
+ *      • Mínimo mayor que props.minRaise.
+ * Al enviar el formulario:
+ *  1. Se llama a props.raiseHandler con el valor introducido.
+ *  2. Se desactiva el estado de "submitting".
+ *  3. Se cierra el modal.
+ *
+ * Uso de hooks:
+ *  - useDisclosure: controla apertura y cierre del Modal.
+ *
+ * Props esperadas:
+ *  - minRaise (número): cantidad mínima permitida para subir.
+ *  - maxRaise (número): cantidad máxima permitida (chips restantes).
+ *  - raiseHandler (función): función asíncrona que procesa la subida.
+ *  - isDisabled (booleano): deshabilita el botón de envío.
+ *  - Cualquier otra prop que se pase al botón principal.
+ */
+
 import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'

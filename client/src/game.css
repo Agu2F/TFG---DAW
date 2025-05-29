@@ -1,18 +1,10 @@
-/* =========================
-   game.css - Tablero, modal y fondo de juego
-   ========================= */
+/* game.css – Tablero, modal y fondo de juego “Casino Pro” */
 
-:root {
-  --game-button-border: #454545;
-  --game-button-disabled-border: #FF0000;
-  --game-board-color: #226c3b;
-  --bg-color: #800020;
-}
-
+/* Fondo del juego */
 .game-bg {
   width: 100vw;
   height: 100vh;
-  background: radial-gradient(circle at center, #2b001f, #08000a);
+  background: radial-gradient(circle at center, #2b0000, #080000);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,22 +13,32 @@
   overflow: auto;
 }
 
+/* Tablero principal */
 .game-board {
-  background: var(--game-board-color);
+  background: var(--board-color);
   padding: 2rem;
-  border: 0.5rem solid var(--game-button-border);
-  border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(0,0,0,0.7);
+  border: 0.5rem solid #080000;      /* rojo */
+  border-radius: var(--border-radius);
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.7),
+    0 0 15px var(--primary-color);               /* glow verde */
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 80%;
   max-width: 1200px;
+  transition: box-shadow var(--transition);
+}
+.game-board:hover {
+  box-shadow:
+    0 0 30px rgba(0, 0, 0, 0.8),
+    0 0 20px var(--primary-color);
 }
 
+/* Botones dentro del tablero */
 .game-board button {
   background: transparent;
-  border: 2px solid var(--primary-color);
+  border: 2px solid var(--primary-color);     
   color: var(--primary-color);
   padding: 0.6rem 1.2rem;
   border-radius: var(--border-radius);
@@ -44,17 +46,31 @@
   transition: all var(--transition);
   margin: 0.5rem;
 }
-.game-board button:disabled {
-  border-color: var(--game-button-disabled-border);
-  color: #888;
-  cursor: not-allowed;
-}
 .game-board button:hover:not(:disabled) {
-  background: var(--accent-color);
+  background: var(--accent-color);             
   color: var(--bg-color);
   box-shadow: 0 0 15px var(--accent-color);
 }
+.game-board button:disabled {
+  border-color: var(--accent-color);
+  color: #888;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
 
+/* Modal genérico dentro del juego */
+.game-board .modal {
+  background: var(--modal-bg);
+  border: 1px solid var(--accent-color);
+  border-radius: var(--border-radius);
+  padding: 1.5rem;
+  box-shadow:
+    0 0 20px rgba(0, 0, 0, 0.8),
+    0 0 15px var(--accent-color);
+  transition: opacity var(--transition);
+}
+
+/* Responsive: ajustes para pantallas pequeñas */
 @media (max-width: 600px) {
   .game-bg,
   .game-board {

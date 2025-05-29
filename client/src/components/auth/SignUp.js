@@ -1,3 +1,18 @@
+/**
+ * Componente SignUp:
+ * ------------------
+ * Este componente gestiona el registro de nuevos usuarios:
+ *  - Muestra un botón "Register" que abre un modal con un formulario Formik:
+ *      • Campos: email, username, password, confirmPassword.
+ *      • Validaciones con Yup:
+ *          - email: formato válido y obligatorio.
+ *          - username: obligatorio.
+ *          - password: entre 6 y 20 caracteres.
+ *          - confirmPassword: debe coincidir con password.
+ *      • Al enviar, realiza POST a `/auth/signup` con los datos en JSON.
+ *      • Muestra feedback en Alerts según la respuesta (`error` o `message`).
+ *  - Usa `useDisclosure` para controlar el modal.
+ */
 import React, { useState } from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'

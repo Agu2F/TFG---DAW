@@ -1,23 +1,42 @@
-# Juego de Póquer Multijugador
-- Un juego de póquer multijugador que utiliza WebSockets
+# Juego de Poker Multijugador
 
-- Implementado con la pila MERN (MongoDB, Express, React, NodeJS)
+Un entorno de Poker en línea que aprovecha WebSockets para partidas en tiempo real.
 
-- Se utiliza Socket.io para proporcionar soporte de WebSocket
+---
 
-- Los usuarios pueden jugar entre sí usando códigos de sala o elegir hacer cola para emparejamiento automático
+## Tecnologías
 
-- Aunque el juego no necesita una base de datos, hemos implementado autenticación de usuarios mediante una API REST que requiere almacenar datos
+- **Frontend:** React  
+- **Backend:** Node.js con Express  
+- **Base de datos:** MongoDB  
+- **Comunicación en tiempo real:** Socket.io  
 
-- Usa patrones de autenticación con JWT; se implementaron Refresh Tokens y Access Tokens para proteger contra ataques XSS. Los tokens se almacenan en    cookies seguras y HttpOnly en lugar de LocalStorage para mayor protección
+---
 
-- Las contraseñas se hashean con la librería bcrypt antes de guardarse
+## Características
 
-- Se envía un correo de confirmación a los usuarios antes de activar su cuenta
+- **Partidas multijugador:**  
+  - Crea o únete a salas mediante códigos únicos.  
+  - Emparejamiento automático “Matchmaking” para conectarte con otro jugador sin necesidad de código.
+
+- **Autenticación y seguridad:**  
+  - API REST con autenticación JWT.  
+  - Uso de Access Tokens y Refresh Tokens para mayor seguridad.  
+  - Tokens almacenados en cookies seguras y HttpOnly.  
+  - Contraseñas encriptadas con bcrypt antes de persistir en la base de datos.
+
+- **Verificación de cuentas:**  
+  - Envío automático de correo electrónico para confirmar la activación del usuario.
+
+---
 
 ## Demo en Vivo
-Puedes probar el juego tú mismo abriéndolo en dos pestañas diferentes y haciendo clic en el botón Matchmaking: 
+
+Prueba el juego en dos pestañas distintas y haz clic en **Matchmaking**:  
 https://agustin-alvarez-fijo-poker-royale-tfg.netlify.app/
 
+---
+
 ## Autor
-Agustín Álvarez Fijo
+
+Agustín Álvarez Fijo  

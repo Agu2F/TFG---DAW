@@ -1,3 +1,16 @@
+/**
+ * Componente SignIn:
+ * ------------------
+ * Este componente permite a los usuarios iniciar sesión o cerrar sesión:
+ *  - Si el usuario está autenticado (user en contexto), muestra un botón "Profile" que abre un modal:
+ *      • Muestra el nombre de usuario y un botón "Sign Out" para cerrar sesión.
+ *      • Al hacer logout llama al endpoint `/auth/signout` y limpia el contexto.
+ *  - Si no hay usuario, muestra un botón "Sign In" que abre un modal con un formulario Formik:
+ *      • Campos: email y password, validados con Yup (requeridos).
+ *      • Al enviar, realiza POST a `/auth/signin`, guarda la respuesta en contexto o muestra error.
+ *      • Los errores se muestran en un Alert de Chakra UI.
+ *  - Usa `useDisclosure` para controlar la apertura/cierre del modal.
+ */
 import React, { useState, useContext } from 'react'
 import { UserContext } from '../../utils/UserContext'
 import { Formik, Form } from 'formik'

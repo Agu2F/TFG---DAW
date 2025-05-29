@@ -1,3 +1,46 @@
+/**
+ * Componente Game:
+ * ---------------
+ *
+ * Este componente gestiona la lógica de una partida de poker en tiempo real
+ * mediante Socket.IO. Su flujo principal es:
+ *
+ * 1. Inicialización de la conexión:
+ *    - Se conecta al servidor en ENDPOINT.
+ *    - Emite evento 'join' para unirse a la sala (roomCode extraído de la URL).
+ *    - Maneja errores de sala llena.
+ *
+ * 2. Estado del juego:
+ *    - Variables de estado para controlar usuarios, turnos, barajas, fichas, bote, apuestas, manos, sonido y ganador.
+ *    - Al montar:
+ *      • Baraja un mazo completo (DECK_OF_CARDS) y reparte cartas a player1, player2 y la mesa (house).
+ *      • Envía el estado inicial al servidor con 'initGameState'.
+ *
+ * 3. Recepción de eventos:
+ *    - 'initGameState' y 'updateGameState': actualizan localmente todas las variables según los datos recibidos.
+ *    - 'roomData': lista de usuarios en sala.
+ *    - 'currentUserData': identifica si eres Player 1 o Player 2.
+ *
+ * 4. Lógica de turnos y rondas:
+ *    - Tras cada cambio de número de turnos:
+ *      • Envía actualizaciones (reparto de flop/turn/river, incrementos, chequeos, fin de partida).
+ *      • Reproduce efectos de sonido según la acción (barajar, subir, fichas, mostrar carta).
+ *      • Calcula la mano local (getHand) para mostrarla al usuario activo.
+ *
+ * 5. Handlers de acciones del jugador:
+ *    - callHandler(): envía evento para “Call” o “Check” según increment.
+ *    - raiseHandler(amount): envía evento para “Raise” ajustando increment, fichas y bote.
+ *    - foldHandler(): envía evento para abandonar la mano y declara ganador al contrario.
+ *
+ * 6. Reinicio de partida:
+ *    - Si se solicita restart, vuelve a barajar, reparte y emite 'initGameState' según ganador o empate.
+ *
+ * 7. Renderizado:
+ *    - Si hay menos de 2 usuarios: muestra “Waiting…”.
+ *    - En la UI: código de sala, componente <Cards> para visualizar cartas, estado del bote y botones de acción (Call/Raise/Fold/Restart).
+ *
+ * Utiliza Hooks de React (useState, useEffect, useContext), utilidades de juego y sonidos con use-sound.
+ */
 import React, { useState, useEffect, useContext } from 'react'
 import DECK_OF_CARDS from '../../utils/deck'
 import shuffleArray from '../../utils/shuffleArray'
@@ -22,7 +65,7 @@ const ENDPOINT = process.env.REACT_APP_ENDPOINT
 function Game(props) {
 	const data = queryString.parse(props.location.search)
 
-	// initialize socket state
+	// Inicializo el estado de socket 
 	const [room, setRoom] = useState(data.roomCode)
 	const [roomFull, setRoomFull] = useState(false)
 	const [users, setUsers] = useState([])
@@ -42,15 +85,15 @@ function Game(props) {
 			if (error) setRoomFull(true)
 		})
 
-		//cleanup on component unmount
+		//Limpio el componente de desconexión
 		return () => {
 			socket.emit('disconnection')
-			//shut down connnection instance
+			//Apago la instancia de conexión
 			socket.off()
 		}
 	}, [])
 
-	//initialize game state
+	//Inicializo el estado de Game
 	const [gameOver, setGameOver] = useState()
 	const [winner, setWinner] = useState('')
 	const [turn, setTurn] = useState('')
@@ -73,18 +116,18 @@ function Game(props) {
 
 	const [localHand, setLocalHand] = useState('N/A')
 
-	//runs once on component mount
+	//Incio el componente mount
 	useEffect(() => {
-		//shuffle DECK_OF_CARDS array
+		//Barajo DECK_OF_CARDS
 		const shuffledCards = shuffleArray(DECK_OF_CARDS)
-		//extract 2 cards to player1Deck
+		//Saco 2 cartas para player1Deck
 		const player1Deck = shuffledCards.splice(0, 2)
-		//extract 2 cards to player2Deck
+		//Saco 2 cartas para player2Deck
 		const player2Deck = shuffledCards.splice(0, 2)
-		//extract 3 cards to houseDeck
+		//Saco 2 cartas para houseDeck
 		const houseDeck = shuffledCards.splice(0, 3)
 
-		//send initial state to server
+		//Mando el estado inicial al servidor
 		socket.emit('initGameState', {
 			gameOver: false,
 			turn: 'Player 1',
@@ -318,7 +361,7 @@ function Game(props) {
 		}
 	}
 
-	//local state
+	//Estado local
 	const [shuffledDeck, setShuffledDeck] = useState('')
 	const [restart, setRestart] = useState(false)
 
