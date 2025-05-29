@@ -19,7 +19,7 @@ import './Homepage.css';
 import io from 'socket.io-client';
 import { UserContext } from '../../utils/UserContext';
 import SignIn from '../../components/auth/SignIn';
-import SignIn from '../../components/auth/SignUp';
+import SignUp from '../../components/auth/SignUp';
 import {
   Heading,
   VStack,
