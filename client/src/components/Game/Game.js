@@ -116,7 +116,7 @@ function Game(props) {
 
 	const [localHand, setLocalHand] = useState('N/A')
 
-	//Incio el componente mount
+    // Inicio de partida: baraja y reparte cartas, emite estado inicial
 	useEffect(() => {
 		//Barajo DECK_OF_CARDS
 		const shuffledCards = shuffleArray(DECK_OF_CARDS)
@@ -147,24 +147,10 @@ function Game(props) {
 		setShuffledDeck(shuffledCards.splice(0, 2))
 	}, [])
 
+	// Manejo de eventos entrantes para sincronizar estado
 	useEffect(() => {
-		socket.on(
-			'initGameState',
-			({
-				gameOver,
-				winner,
-				turn,
-				player1Deck,
-				player2Deck,
-				houseDeck,
-				increment,
-				player1Chips,
-				player2Chips,
-				numberOfTurns,
-				pot,
-				raiseAmount,
-				player1Name,
-				player2Name,
+		socket.on('initGameState',
+			({gameOver,winner,turn,player1Deck,player2Deck,houseDeck,increment,player1Chips,player2Chips,numberOfTurns,pot,raiseAmount,player1Name,player2Name,
 			}) => {
 				setGameOver(gameOver)
 				setTurn(turn)
@@ -183,8 +169,7 @@ function Game(props) {
 			}
 		)
 
-		socket.on(
-			'updateGameState',
+		socket.on('updateGameState',
 			({
 				gameOver,
 				winner,
@@ -233,6 +218,8 @@ function Game(props) {
 		})
 	}, [])
 
+
+    // Lógica por turnos: flop, turn, river, fin de juego y sonidos
 	useEffect(() => {
 		if (
 			user &&
@@ -275,12 +262,15 @@ function Game(props) {
 			})
 		}
 
+    	// Calcula mano local para el jugador activo
 		if (!gameOver && currentUser === 'Player 1')
 			setLocalHand(getHand(player1Deck, houseDeck))
 		else if (!gameOver && currentUser === 'Player 2')
 			setLocalHand(getHand(player2Deck, houseDeck))
 	}, [numberOfTurns])
 
+
+	//Call / Check
 	async function callHandler() {
 		if (currentUser === 'Player 1') {
 			socket.emit('updateGameState', {
@@ -303,6 +293,7 @@ function Game(props) {
 		}
 	}
 
+	// Raise
 	async function raiseHandler(amount) {
 		amount = parseInt(amount)
 
@@ -347,6 +338,7 @@ function Game(props) {
 		}
 	}
 
+    // Fold
 	function foldHandler() {
 		if (currentUser === 'Player 1') {
 			socket.emit('updateGameState', {
@@ -361,7 +353,7 @@ function Game(props) {
 		}
 	}
 
-	//Estado local
+    // Manejo de reinicio de partida
 	const [shuffledDeck, setShuffledDeck] = useState('')
 	const [restart, setRestart] = useState(false)
 
@@ -437,6 +429,7 @@ function Game(props) {
 					player2Name: 'Player 2',
 				})
 			}
+			// similar a la inicialización
 			setRestart(false)
 			setShuffledDeck(shuffledCards.splice(0, 2))
 		}
