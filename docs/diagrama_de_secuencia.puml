@@ -1,0 +1,19 @@
+@startuml
+participant Usuario
+participant Frontend
+participant Backend
+participant MongoDB
+
+Usuario -> Frontend: Rellenar formulario login
+Frontend -> Backend: POST /login
+Backend -> MongoDB: Consultar credenciales
+MongoDB --> Backend: Datos usuario
+Backend -> Frontend: JWT + datos perfil
+Frontend -> Usuario: Mostrar interfaz principal
+
+Usuario -> Frontend: Solicitar emparejamiento
+Frontend -> Backend: WS "join_queue"
+Backend -> Backend: Emparejar usuarios
+Backend -> Frontend: WS "matched" + salaID
+Frontend -> Usuario: Enviar código de sala
+@enduml

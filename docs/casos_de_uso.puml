@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+actor Usuario
+rectangle "Sistema Poker Royal" {
+  Usuario -- (Registrarse)
+  Usuario -- (Verificar correo)
+  Usuario -- (Iniciar sesión)
+  Usuario -- (Unirse a partida)
+  Usuario -- (Realizar apuesta)
+  Usuario -- (Ver estado de partida)
+}
+@enduml
