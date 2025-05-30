@@ -18,7 +18,6 @@ Poker Royal es una plataforma full-stack para partidas de poker uno contra uno, 
 * **Salas privadas** por código
 * **Notificaciones** de turno y resultados en tiempo real
 * **Responsive**: Compatible con escritorio y móvil
-* **Pruebas** unitarias e integración con Jest y Supertest
 
 ---
 
@@ -36,12 +35,11 @@ poker-royal/
 
 ## Tecnologías
 
-* **Frontend:** React, Create React App, Tailwind CSS, Socket.io-client, Context API/Hooks
+* **Frontend:** React, Create React App, Socket.io-client, Context API/Hooks
 * **Backend:** Node.js, Express, Socket.io, Mongoose (MongoDB Atlas)
 * **Autenticación:** JSON Web Tokens (JWT)
 * **Correo:** Servicio SMTP para verificación de usuarios
-* **Despliegue:** Netlify (frontend) y Heroku/DigitalOcean/AWS (backend)
-* **Pruebas:** Jest, Supertest
+* **Despliegue:** Netlify (frontend) y Render (backend)
 
 ---
 
@@ -149,4 +147,4 @@ Asegúrate de configurar variables de entorno en tu plataforma de despliegue.
 
 ## Licencia
 
-MIT © 2025 Agustín Álvarez Fijo
+© Agustín Álvarez Fijo - 2025
