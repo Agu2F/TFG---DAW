@@ -80,6 +80,7 @@ const verifyJWT = async (req, res, next) => {
     } else if (refresh) {
         jwt.verify(refresh, process.env.SECRET_2, async (err, decoded) => {
             if (err || !decoded?.id) return next();
+            //Mongoose para buscar al usuario por ID
             const user = await User.findById(decoded.id);
             if (!user) return next();
 
@@ -107,6 +108,7 @@ router.post('/signin', verifyJWT, async (req, res, next) => {
         return res.status(400).json({ error: 'Please fill all the fields' });
     }
     try {
+        // Mongoose para buscar usuario por email
         const user = await User.findOne({ email });
         if (!user) return res.status(401).json({ error: 'Not found' });
         if (!user.isValid) return res.status(401).json({ error: 'Email not verified' });
@@ -137,13 +139,15 @@ router.post('/signup', verifyJWT, async (req, res, next) => {
         return res.status(400).json({ error: 'Please fill all the fields' });
     }
     try {
-        if (await User.findOne({ email })) {
+        // Mongoose para comprobar existencia por email
+        if (await User.findOne({ email })) {                       // ← Mongoose: findOne
             return res.status(409).json({ error: 'Email already exists' });
         }
-        if (await User.findOne({ username })) {
+        // Mongoose para comprobar existencia por username
+        if (await User.findOne({ username })) {                    // ← Mongoose: findOne
             return res.status(409).json({ error: 'Username already exists' });
         }
-
+        // Crear y guardar nuevo usuario
         const hash = await bcrypt.hash(password, SALT_ROUNDS);
         const uniqueString = randString(10);
         await new User({ email, username, hash, uniqueString, isValid: false }).save();

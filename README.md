@@ -52,12 +52,7 @@ poker-royal/
 * Cuenta en MongoDB Atlas (o MongoDB local)
 * Credenciales SMTP (Mailtrap, SendGrid, etc.)
 
-### Clonar repositorio
-
-```bash
-git clone https://github.com/agustin-alvarez-fijo/poker-royal.git
-cd poker-royal
-```
+---
 
 ### Backend
 
@@ -127,12 +122,6 @@ Dentro de la carpeta `docs/` encontrarás los archivos PlantUML con los diagrama
 
 ## Despliegue
 
-* **Frontend:** Genera la build y sube a Netlify:
-
-  ```bash
-  cd client
-  npm run build
-  ```
 * **Backend:** Compila (si aplica) y despliega en Heroku o tu proveedor preferido:
 
   ```bash
@@ -140,9 +129,13 @@ Dentro de la carpeta `docs/` encontrarás los archivos PlantUML con los diagrama
   npm run build    
   npm start
   ```
+  
+* **Frontend:** Genera la build y sube a Netlify:
 
-Asegúrate de configurar variables de entorno en tu plataforma de despliegue.
-
+  ```bash
+  cd client
+  npm run build
+  ```
 ---
 
 ## Licencia
