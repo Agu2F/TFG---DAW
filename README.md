@@ -6,7 +6,7 @@
 
 ## Descripción
 
-Poker Royal es una plataforma full-stack para partidas de poker uno contra uno, desarrollada con tecnologías JavaScript: React en el frontend y Node.js con Express en el backend. La comunicación en tiempo real se gestiona mediante Socket.io, y los usuarios se autentican con JWT para garantizar seguridad. Los datos se almacenan en MongoDB Atlas.
+Poker Royal es una plataforma full-stack para partidas de poker uno contra uno, desarrollada con tecnologías JavaScript: React en el frontend y Node.js con Express en el backend. La comunicación en tiempo real se gestiene mediante Socket.io, y los usuarios se autentican con JWT para garantizar seguridad. Los datos se almacenan en MongoDB Atlas.
 
 ---
 
@@ -26,17 +26,33 @@ Poker Royal es una plataforma full-stack para partidas de poker uno contra uno, 
 ```
 poker-royal/
 ├── client/             # Aplicación React (frontend)
-├── server/             # API REST y Socket.io (backend)
+├── server/             # API REST y Socket.io (backend Node/Express)
+├── backend/            # Esquemas y definición de colecciones MongoDB
 ├── docs/               # Diagramas UML
 └── README.md           # Este archivo
 ```
+
+### Detalle de la carpeta `/backend`
+
+En la carpeta **`backend/`** se encuentran los esquemas que representan las colecciones en MongoDB Atlas, equivalentes a las tablas originalmente diseñadas en PostgreSQL. Cada archivo define un modelo Mongoose para:
+
+1. **`pokt_partidas_par`** – Partidas de poker
+2. **`pokt_jugadores_jug`** – Jugadores registrados
+3. **`pokt_cartas_car`** – Cartas del mazo
+4. **`pokt_mesa_mes`** – Cartas comunitarias en la mesa
+5. **`pokt_cartas_par_cap`** – Cartas privadas de cada jugador
+6. **`pokt_partidas_jug_pju`** – Relación jugadores ↔ partidas (n-n)
+7. **`pokt_apuestas_apu`** – Apuestas realizadas en cada partida
+
+Cada modelo incluye campos, tipos y referencias (`ObjectId`) para mantener la misma lógica relacional que existía en la base de datos SQL. Además, se definen índices y validaciones equivalentes (por ejemplo, `enum` para valores restringidos y restricciones `unique` para correos, tokens y combinaciones únicas).
 
 ---
 
 ## Tecnologías
 
 * **Frontend:** React, Create React App, Socket.io-client, Context API/Hooks
-* **Backend:** Node.js, Express, Socket.io, Mongoose (MongoDB Atlas)
+* **Backend (API):** Node.js, Express, Socket.io, Mongoose (MongoDB Atlas)
+* **Base de datos:** MongoDB Atlas (colecciones definidas en `/backend`)
 * **Autenticación:** JSON Web Tokens (JWT)
 * **Correo:** Servicio SMTP para verificación de usuarios
 * **Despliegue:** Netlify (frontend) y Render (backend)
@@ -54,29 +70,31 @@ poker-royal/
 
 ---
 
-### Backend
+### Backend (API)
 
 ```bash
 cd server
 npm install        
 cp .env.example .env
 # Edita .env con tus valores:
-# PORT, MONGO_URI, JWT_SECRET, EMAIL_USER, EMAIL_PASS, CLIENT_URL
+# PORT, MONGO_ATLAS_URI, JWT_SECRET, JWT_SECRET_2, EMAIL_USER, EMAIL_PASS, CLIENT_URL
 npm run dev        
 ```
 
 El servidor se ejecutará en [http://localhost:4000](http://localhost:4000) con hot-reload.
 
-### Frontend
+---
+
+### Frontend (Cliente)
 
 ```bash
-cd ../client
+cd client
 npm install       
 cp .env.example .env
 # Edita .env con tus valores:
 # REACT_APP_API_URL=http://localhost:4000/api
 # REACT_APP_SOCKET_URL=http://localhost:4000
-npm start          # o yarn start
+npm start          
 ```
 
 El cliente estará disponible en [http://localhost:3000](http://localhost:3000).
@@ -93,7 +111,7 @@ El cliente estará disponible en [http://localhost:3000](http://localhost:3000).
 
 ---
 
-## Visualización de Diagramas (/docs)
+## Visualización de Diagramas (`/docs`)
 
 Dentro de la carpeta `docs/` encontrarás los archivos PlantUML con los diagramas UML y de flujo utilizados en la documentación. Para generar y visualizar estos diagramas tienes varias opciones:
 
@@ -122,22 +140,27 @@ Dentro de la carpeta `docs/` encontrarás los archivos PlantUML con los diagrama
 
 ## Despliegue
 
-* **Backend:** Compila (si aplica) y despliega en Heroku o tu proveedor preferido:
+* **Backend (API):**
 
   ```bash
   cd server
-  npm run build    
+  npm run build     # si aplica (por ejemplo, si transpilas TS)
   npm start
   ```
-  
-* **Frontend:** Genera la build y sube a Netlify:
+
+  Despliega en Render, Heroku o tu proveedor preferido.
+
+* **Frontend (SPA):**
 
   ```bash
   cd client
   npm run build
   ```
+
+  Sube `client/build` a Netlify.
+
 ---
 
 ## Licencia
 
-© Agustín Álvarez Fijo - 2025
+© Agustín Álvarez Fijo – 2025
