@@ -2,7 +2,7 @@
  * Componente SignIn:
  * ------------------
  * Este componente permite a los usuarios iniciar sesión o cerrar sesión:
- *  - Si el usuario está autenticado (user en contexto), muestra un botón "Profile" que abre un modal:
+ *  - Si el usuario está autenticado, muestra un botón "Profile" que abre un modal:
  *      • Muestra el nombre de usuario y un botón "Sign Out" para cerrar sesión.
  *      • Al hacer logout llama al endpoint `/auth/signout` y limpia el contexto.
  *  - Si no hay usuario, muestra un botón "Sign In" que abre un modal con un formulario Formik:

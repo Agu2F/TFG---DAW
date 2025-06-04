@@ -6,7 +6,7 @@
  * - email:        Dirección de correo del usuario. Obligatorio.
  * - username:     Nombre de usuario público. Obligatorio.
  * - hash:         Hash de la contraseña para almacenamiento seguro. Obligatorio.
- * - uniqueString: Cadena única para verificación de cuenta (por ejemplo, token de activación). Opcional.
+ * - uniqueString: Cadena única para verificación de cuenta (token de activación).
  * - isValid:      Indicador de si la cuenta está verificada. Opcional, por defecto false.
  *
  * Una vez definido el esquema, se exporta el modelo 'User' para poder usarlo en
