@@ -1,7 +1,7 @@
 /**
  * Gestión de usuarios en memoria para partidas de Poker Royal
  *
- * Este módulo mantiene un arreglo `users` con los usuarios actualmente
+ * Este módulo mantiene un array `users` con los usuarios actualmente
  * conectados y sus salas, proporcionando funciones para:
  * - addUser({ id, name, room }): añade un usuario a la sala si no está llena (máx. 2 jugadores)
  * - removeUser(id): elimina y devuelve el usuario desconectado
