@@ -545,6 +545,10 @@ function Game(props) {
 					)}
 				</HStack>
 			</div>
+			{/* Pie de página */}
+			<footer className="homepage-footer">
+				<small>by Agustín Alvarez Fijo</small>
+			</footer>
 		</div>
 	)
 }

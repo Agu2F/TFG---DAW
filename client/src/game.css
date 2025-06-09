@@ -70,6 +70,47 @@
   transition: opacity var(--transition);
 }
 
+
+/* FOOTER */
+.homepage-footer {
+  position: fixed;         /* Fijo en la parte inferior */
+  bottom: 0;
+  left: 0;
+  width: 100%;             /* Ocupa todo el ancho */
+  z-index: 1000;           /* Por encima de todo */
+  padding: 1rem 0;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  border-top: 4px solid #e60000;  /* Línea más gruesa para mayor contraste */
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.5);
+  /* Para iOS Safe Area */
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom));
+}
+
+.homepage-footer small {
+  display: block;
+  color: #ccc;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: glowFooter 3s ease-in-out infinite;
+}
+
+@keyframes glowFooter {
+  0%, 100% {
+    text-shadow: 0 0 1px #ffffff, 0 0 4px #000000;
+  }
+  50% {
+    text-shadow: 0 0 2px #000000, 0 0 8px #ffffff;
+  }
+}
+
+/* Aseguramos que el contenido del juego no quede oculto tras el footer */
+.game-board {
+  margin-bottom: 4rem; /* Igual que la altura estimada del footer */
+}
+
+
 /* Responsive: ajustes para pantallas pequeñas */
 @media (max-width: 600px) {
   .game-bg,

@@ -34,25 +34,16 @@ poker-royal/
 
 ### Detalle de la carpeta `/backend`
 
-En la carpeta **`backend/`** se encuentran los esquemas que representan las colecciones en MongoDB Atlas, equivalentes a las tablas originalmente diseñadas en PostgreSQL. Cada archivo define un modelo Mongoose para:
+En la carpeta **`backend/`** se encuentran los esquemas que representan las colecciones en MongoDB Atlas. Cada archivo define un modelo Mongoose para:
 
-1. **`pokt_partidas_par`** – Partidas de poker
-2. **`pokt_jugadores_jug`** – Jugadores registrados
-3. **`pokt_cartas_car`** – Cartas del mazo
-4. **`pokt_mesa_mes`** – Cartas comunitarias en la mesa
-5. **`pokt_cartas_par_cap`** – Cartas privadas de cada jugador
-6. **`pokt_partidas_jug_pju`** – Relación jugadores ↔ partidas (n-n)
-7. **`pokt_apuestas_apu`** – Apuestas realizadas en cada partida
-
-Cada modelo incluye campos, tipos y referencias (`ObjectId`) para mantener la misma lógica relacional que existía en la base de datos SQL. Además, se definen índices y validaciones equivalentes (por ejemplo, `enum` para valores restringidos y restricciones `unique` para correos, tokens y combinaciones únicas).
-
+1. **`Users`** – Jugadores registrados
 ---
 
 ## Tecnologías
 
 * **Frontend:** React, Create React App, Socket.io-client, Context API/Hooks
 * **Backend (API):** Node.js, Express, Socket.io, Mongoose (MongoDB Atlas)
-* **Base de datos:** MongoDB Atlas (colecciones definidas en `/backend`)
+* **Base de datos:** MongoDB Atlas.
 * **Autenticación:** JSON Web Tokens (JWT)
 * **Correo:** Servicio SMTP para verificación de usuarios
 * **Despliegue:** Netlify (frontend) y Render (backend)
@@ -81,7 +72,7 @@ cp .env.example .env
 npm run dev        
 ```
 
-El servidor se ejecutará en [http://localhost:4000](http://localhost:4000) con hot-reload.
+El servidor se ejecutará en [http://localhost:3000](http://localhost:3000) con hot-reload.
 
 ---
 
@@ -92,8 +83,8 @@ cd client
 npm install       
 cp .env.example .env
 # Edita .env con tus valores:
-# REACT_APP_API_URL=http://localhost:4000/api
-# REACT_APP_SOCKET_URL=http://localhost:4000
+# REACT_APP_API_URL=http://localhost:3000/api
+# REACT_APP_SOCKET_URL=http://localhost:3000
 npm start          
 ```
 
